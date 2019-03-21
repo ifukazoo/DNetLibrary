@@ -9,38 +9,21 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    public class File
+    public class Files
     {
         public delegate bool Matcher(string path);
 
         public static List<string> CollectFiles(string dirPath, Matcher matcher)
         {
             var collectingFiles = new ConcurrentQueue<string>();
-            var finisher = new ConcurrentDictionary<string, bool>();
-            CollectFilesRec(dirPath, matcher, collectingFiles, finisher);
-            while (finisher.IsEmpty || finisher.Any((e) => !e.Value))
-            {
-                Thread.Sleep(10);
-            }
+            CollectFilesRec(dirPath, matcher, collectingFiles);
             return collectingFiles.ToList();
         }
 
-        private static void CollectFilesRec(string dirPath, Matcher matcher, ConcurrentQueue<string> collectingFiles, ConcurrentDictionary<string, bool> finisher)
+        private static void CollectFilesRec(string dirPath, Matcher matcher, ConcurrentQueue<string> collectingFiles)
         {
-            finisher[dirPath] = false;
             var info = new DirectoryInfo(dirPath);
-            var dirs = info.EnumerateDirectories();
-            foreach (var dir in dirs)
-            {
-                ThreadPool.QueueUserWorkItem((_) =>
-                {
-                    CollectFilesRec(dir.FullName, matcher, collectingFiles, finisher);
-                });
-                while (!finisher.ContainsKey(dir.FullName))
-                {
-                    Thread.Sleep(1);
-                }
-            }
+            Parallel.ForEach(info.EnumerateDirectories(), (dir) => CollectFilesRec(dir.FullName, matcher, collectingFiles));
             var files = info.EnumerateFiles();
             foreach (var f in files)
             {
@@ -49,7 +32,6 @@ namespace Library
                     collectingFiles.Enqueue(f.FullName);
                 }
             }
-            finisher[dirPath] = true;
         }
     }
 }
