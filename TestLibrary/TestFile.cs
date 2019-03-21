@@ -45,7 +45,7 @@ namespace TestLibrary
                 var tmpPath2 = Path.ChangeExtension(tmpPath1, TESTEX);
                 File.Move(tmpPath1, tmpPath2);
             }
-            var (files, err) = Files.CollectFiles(Path.GetTempPath(), (path) => path.EndsWith(TESTEX));
+            var (files, err) = Files.CollectPath(Path.GetTempPath(), (path) => path.EndsWith(TESTEX));
             Assert.AreEqual(count, files.Count);
             Assert.AreEqual(0, err.Count);
         }
@@ -63,7 +63,7 @@ namespace TestLibrary
                 File.Move(tmpPath1, tmpPath3);
                 tmpFiles.Add(tmpPath3);
             }
-            var (files, errs) = Files.CollectFiles(Path.GetTempPath(), (path) => path.EndsWith(TESTEX));
+            var (files, errs) = Files.CollectPath(Path.GetTempPath(), (path) => path.EndsWith(TESTEX));
             Assert.AreEqual(count, files.Count);
             Assert.AreEqual(0, errs.Count);
             tmpFiles.ForEach(f => File.Delete(f));
@@ -72,7 +72,7 @@ namespace TestLibrary
         [TestMethod]
         public void TestMethod3()
         {
-            var (files, errs) = Files.CollectFiles(@"C:\Config.Msi", (_) => false);
+            var (files, errs) = Files.CollectPath(@"C:\Config.Msi", (_) => false);
             Assert.AreNotEqual(0, errs.Count);
         }
     }

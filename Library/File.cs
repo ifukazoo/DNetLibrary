@@ -13,15 +13,15 @@ namespace Library
     {
         public delegate bool Matcher(string path);
 
-        public static (List<string>, List<string>) CollectFiles(string dirPath, Matcher matcher)
+        public static (List<string>, List<string>) CollectPath(string dirPath, Matcher matcher)
         {
-            var collectingFiles = new ConcurrentQueue<string>();
-            var errFiles = new ConcurrentQueue<string>();
-            CollectFilesRec(dirPath, matcher, collectingFiles, errFiles);
-            return (collectingFiles.ToList(), errFiles.ToList());
+            var collecting = new ConcurrentQueue<string>();
+            var errs = new ConcurrentQueue<string>();
+            CollectPathRec(dirPath, matcher, collecting, errs);
+            return (collecting.ToList(), errs.ToList());
         }
 
-        private static void CollectFilesRec(string dirPath, Matcher matcher, ConcurrentQueue<string> collecting, ConcurrentQueue<string> errs)
+        private static void CollectPathRec(string dirPath, Matcher matcher, ConcurrentQueue<string> collecting, ConcurrentQueue<string> errs)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace Library
                         collecting.Enqueue(f.FullName);
                     }
                 }
-                Parallel.ForEach(info.EnumerateDirectories(), (dir) => CollectFilesRec(dir.FullName, matcher, collecting, errs));
+                Parallel.ForEach(info.EnumerateDirectories(), (dir) => CollectPathRec(dir.FullName, matcher, collecting, errs));
             }
             catch (UnauthorizedAccessException e)
             {
