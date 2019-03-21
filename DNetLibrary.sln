@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{ED086512-7010-46D2-857F-E29F48A67545}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNetLibrary", "DNetLibrary\DNetLibrary.csproj", "{ED086512-7010-46D2-857F-E29F48A67545}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLibrary", "TestLibrary\TestLibrary.csproj", "{6E4AF2F9-DDCA-4547-80B8-363E30258E30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDNetLibrary", "TestDNetLibrary\TestDNetLibrary.csproj", "{6E4AF2F9-DDCA-4547-80B8-363E30258E30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {030C3F4C-61F2-40B9-8F05-598055918279}
+		SolutionGuid = {23CBCDD7-5F8F-4EF9-85C8-BDB7CD8333B5}
 	EndGlobalSection
 EndGlobal

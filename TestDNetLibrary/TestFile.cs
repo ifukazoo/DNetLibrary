@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.IO;
-using Library;
+using DNetLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TestLibrary
+namespace TestDNetLibrary
 {
     [TestClass]
     public class TestFile
