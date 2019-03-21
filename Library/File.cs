@@ -23,7 +23,6 @@ namespace Library
         private static void CollectFilesRec(string dirPath, Matcher matcher, ConcurrentQueue<string> collectingFiles)
         {
             var info = new DirectoryInfo(dirPath);
-            Parallel.ForEach(info.EnumerateDirectories(), (dir) => CollectFilesRec(dir.FullName, matcher, collectingFiles));
             var files = info.EnumerateFiles();
             foreach (var f in files)
             {
@@ -32,6 +31,7 @@ namespace Library
                     collectingFiles.Enqueue(f.FullName);
                 }
             }
+            Parallel.ForEach(info.EnumerateDirectories(), (dir) => CollectFilesRec(dir.FullName, matcher, collectingFiles));
         }
     }
 }
